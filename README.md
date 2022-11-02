@@ -82,6 +82,8 @@ Rest Methods available (I used Postman):
 
 
 
+
+
    Desc: get all orders (suppose to be per user)
    
    Method: GET
@@ -98,6 +100,6 @@ Rest Methods available (I used Postman):
 
 TODOS and Problems:
 
-running the app using docker does not run the OrdersVerticle of vertx (running using java command it works), so actually what is left is to create another docker file for OrderVerticle and a docker-compose.yml file to build it and run the containers for each verticle.
-Also, the data is not really exist and there are no files to read from and write to. Only the main architecture is implemented.
+running the app using docker does not run the OrdersVerticle of vertx (running using java command it works), so actually what is left is to create another docker file for OrderVerticle, add fabric8 plugin for maven-docker, and generate the docker-compose.yml file to build and run the containers for each verticle.
+Also, the data is not really implemented and exist, and there are no real files to read from and write to. Only the main architecture is implemented.
 
