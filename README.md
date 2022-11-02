@@ -8,8 +8,8 @@ Default locale: en_US, platform encoding: Cp1255
 OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 
 **pre-requisities:**
-assume you have installed on your machine - 
-atleast java 11 version , Docker Desktop, mvn-cli (not must), some IDE
+assume you have installed on your machine:
+java 11 version , Docker Desktop, mvn-cli (not must), intellij IDE
 
 **running the app:**
 - clone the project into your workspace `git clone https://github.com/itaiiiiiiiif/ptrhw.git`
