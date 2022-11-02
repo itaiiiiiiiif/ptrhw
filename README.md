@@ -16,7 +16,7 @@ running the app:
 Rest Methods available (I used Postman):
 
 
-
+-------------------------------------------------
    Desc: login and create user session
    
    Method: POST
@@ -33,7 +33,7 @@ Rest Methods available (I used Postman):
 
    ![img.png](img.png)
 
-
+-------------------------------------------------
 
 
 
@@ -53,7 +53,7 @@ Rest Methods available (I used Postman):
    
    ![image](https://user-images.githubusercontent.com/83422637/199584430-282d6b6e-3a87-44eb-988e-32bc90145385.png)
 
-
+-------------------------------------------------
 
 
 
@@ -77,7 +77,7 @@ Rest Methods available (I used Postman):
    ![image](https://user-images.githubusercontent.com/83422637/199584998-8b7cd4ba-2ef6-49ee-9133-9eaf8c56f9e6.png)
 
 
-
+-------------------------------------------------
 
 
 
@@ -92,7 +92,7 @@ Rest Methods available (I used Postman):
    
 
 
-
+-------------------------------------------------
 
 
 
