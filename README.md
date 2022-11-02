@@ -10,12 +10,21 @@ running the app:
 - `docker run -p 8888:8888 vertxdocker`
 
 
+
+
+
 Rest Methods available (I used Postman):
 
+
+
    Desc: login and create user session
+   
    Method: POST
+   
    URL: http://localhost:8888/api/login
+   
    Params:
+   
    example of request body (as json)
    {
       "userId" : 1234556,
@@ -25,10 +34,18 @@ Rest Methods available (I used Postman):
    ![img.png](img.png)
 
 
+
+
+
+
    Desc: logout and clear user session   
+   
    Method: POST
+   
    URL: http://localhost:8888/api/logout
+   
    Params:
+   
    example of request body (as json)
    {
       "userId" : 1234556
@@ -39,10 +56,17 @@ Rest Methods available (I used Postman):
 
 
 
+
+
+
    Desc: insert new order
+   
    Method: POST
+   
    URL: http://localhost:8888/api/orders
+   
    Params:
+   
    example of request body (as json)
    {
       "_id" : 1234556,
@@ -53,10 +77,24 @@ Rest Methods available (I used Postman):
    ![image](https://user-images.githubusercontent.com/83422637/199584998-8b7cd4ba-2ef6-49ee-9133-9eaf8c56f9e6.png)
 
 
+
+
+
+
+
    Desc: get all orders (suppose to be per user)
+   
    Method: GET
+   
    URL: http://localhost:8888/api/orders
    
+
+
+
+
+
+
+
 
 TODOS and Problems:
 
