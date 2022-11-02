@@ -21,7 +21,7 @@
         <vertx.version>4.3.4</vertx.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
 
-        <main.verticle>com.example.rest.verticles.MainVerticle</main.verticle>
+        <main.verticle>org.example.rest.verticles.RestVerticle</main.verticle>
         <launcher.class>io.vertx.core.Launcher</launcher.class>
     </properties>
 
@@ -93,7 +93,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <release>11</release>
                 </configuration>
             </plugin>
             <plugin>

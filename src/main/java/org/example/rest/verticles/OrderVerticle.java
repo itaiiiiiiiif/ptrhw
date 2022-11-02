@@ -26,12 +26,6 @@ public class OrderVerticle  extends AbstractVerticle {
             json.put("newOrder", message.body());
             message.reply(json);
         });
-//        m_insertOrderEvent = evBus.consumer(EventBusTopics.INSERT_ORDER, handler -> {
-//            JsonObject json = JsonObject.mapFrom(handler.body());
-//            System.out.println(handler.body());
-//            json.put("newOrder", handler.body());
-//            handler.reply(json);
-//        });
         startPromise.complete();
     }
 
