@@ -1,22 +1,21 @@
 # ptrhw
 Pointer Homework Assignment
 
-running the app:
+**running the app:**
 - clone the project into your workspace `git clone https://github.com/itaiiiiiiiif/ptrhw.git`
 - `cd ptrhw` 
 - create the fat.jar `mvn package`
 - run without Docker  ` java -jar target/RestVerticleApp-1.0-SNAPSHOT-fat.jar` **OR** right click and run the application on your IDE (I used intellij)
 - run with Docker ` docker build -t vertxdocker .`
 - `docker run -p 8888:8888 vertxdocker`
+- you can see the image and containers in your Docker Desktop app
 
 
 
 
 
-Rest Methods available (I used Postman):
+**Rest Methods available (I used Postman):**
 
-
--------------------------------------------------
    Desc: login and create user session
    
    Method: POST
