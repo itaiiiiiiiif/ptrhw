@@ -109,6 +109,6 @@ java 11 version , Docker Desktop, mvn-cli (not must), intellij IDE
 
 TODOS and Problems:
 
-running the app using docker does not run the OrdersVerticle of vertx (running using java command it works), so actually what is left is to create another docker file for OrderVerticle, add fabric8 plugin for maven-docker, and generate the docker-compose.yml file to build and run the containers for each verticle.
-Also, the data is not really implemented and exist, and there are no real files to read from and write to. Only the main architecture is implemented.
+running the app using docker does not run the OrdersVerticle of vertx (it works if you ran the app using java command), so actually what is left is to create another dockerfile for OrderVerticle, add the fabric8 plugin for maven-docker, and generate the docker-compose.yml file to build and run the containers for each verticle.
+Also, the data (users/orders) is not really implemented and exist, and there are no real files to read from, and write to. Only the main architecture is implemented.
 
