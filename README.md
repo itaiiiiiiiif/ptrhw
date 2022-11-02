@@ -1,15 +1,15 @@
 # ptrhw
 Pointer Homework Assignment
 
-**pre-requisities and version:**
-Apache Maven 3.8.6 (84538c9988a25aec085021c365c560670ad80f63)
-Maven home: C:\Program Files\apache-maven-3.8.6
-Java version: 11.0.17, vendor: Amazon.com Inc., runtime: C:\Users\Ifrah\.jdks\corretto-11.0.17
+**dev versions:**
+Apache Maven 3.8.6
+Java version: 11.0.17, vendor: Amazon.com Inc., runtime: jdk corretto-11.0.17
 Default locale: en_US, platform encoding: Cp1255
 OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 
+**pre-requisities:**
 assume you have installed on your machine - 
-atleast java 11 version , Docker Desktop, mvn-cli, some IDE
+atleast java 11 version , Docker Desktop, mvn-cli (not must), some IDE
 
 **running the app:**
 - clone the project into your workspace `git clone https://github.com/itaiiiiiiiif/ptrhw.git`
