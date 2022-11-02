@@ -1,11 +1,6 @@
 # ptrhw
 Pointer Homework Assignment
 
-pre-requisites:
-- you have mvn installed
-- you have docker desktop installed
-- java 11
-
 running the app:
 - clone the project into your workspace `git clone https://github.com/itaiiiiiiiif/ptrhw.git`
 - `cd prthw` 
