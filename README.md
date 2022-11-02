@@ -3,7 +3,7 @@ Pointer Homework Assignment
 
 running the app:
 - clone the project into your workspace `git clone https://github.com/itaiiiiiiiif/ptrhw.git`
-- `cd prthw` 
+- `cd ptrhw` 
 - create the fat.jar `mvn package`
 - run without Docker  ` java -jar target/RestVerticleApp-1.0-SNAPSHOT-fat.jar` **OR** right click and run the application on your IDE (I used intellij)
 - run with Docker ` docker build -t vertxdocker .`
