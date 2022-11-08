@@ -13,7 +13,8 @@ public class OrderVerticle  extends AbstractVerticle {
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
         EventBus evBus = vertx.eventBus();
-        evBus.publish(EventBusTopics.START_EVENT, "OrderVerticle started");
+        System.out.println(getVertx());
+        //evBus.publish(EventBusTopics.START_EVENT, "OrderVerticle started");
         m_getAllOrdersEvent = evBus.consumer(EventBusTopics.GET_ALL_ORDERS, handler -> {
             System.out.println(handler.body());
             handler.reply("GET_ALL_RESPONSE");

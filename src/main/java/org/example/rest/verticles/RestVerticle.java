@@ -4,14 +4,14 @@ import com.hazelcast.client.impl.clientside.ClientConnectionManagerFactory;
 import com.hazelcast.client.impl.clientside.HazelcastClientInstanceImpl;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Promise;
-import io.vertx.core.Vertx;
+import io.vertx.core.*;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.spi.cluster.hazelcast.HazelcastClusterManager;
 import org.example.rest.handlers.OrderHandler;
 import org.example.rest.handlers.UserHandler;
 import org.example.rest.repository.UserRepository;
@@ -19,25 +19,46 @@ import org.example.rest.services.UserService;
 
 public class RestVerticle extends AbstractVerticle {
 
+    private UserRepository userRepository;
+    private UserService userService;
+    private UserHandler userHandler;
+    private  OrderHandler orderHandler;
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
 
-        vertx.eventBus().publish(EventBusTopics.START_EVENT, "RestVerticle started");
+        //vertx.eventBus().publish(EventBusTopics.START_EVENT, "RestVerticle started");
 
-        final UserRepository userRepository = new UserRepository(vertx);
-        final UserService userService = new UserService(userRepository);
-        final UserHandler userHandler = new UserHandler(userService);
+        ClusterManager mgr = new HazelcastClusterManager();
+        VertxOptions options = new VertxOptions().setClusterManager(mgr);
+        Vertx.clusteredVertx(options, res -> {
+            if (res.succeeded()) {
+                Vertx vertx = res.result();
+                vertx.deployVerticle(OrderVerticle.class, new DeploymentOptions(), ar -> {
+                    if(ar.succeeded()) {
+                        System.out.println("order vertical is up");
+                    }
+                });
 
-        final OrderHandler orderHandler = new OrderHandler(vertx);
+                userRepository = new UserRepository(vertx);
+                userService = new UserService(userRepository);
+                userHandler = new UserHandler(userService);
 
-        Router router = getRouter(vertx, userHandler, orderHandler);
+                orderHandler = new OrderHandler(vertx);
 
-        vertx.createHttpServer().requestHandler(router).listen(8888, http -> {
-            if (http.succeeded()) {
-                System.out.println("HTTP server started on port 8888");
-                startPromise.complete();
+                Router router = getRouter(vertx, userHandler, orderHandler);
+
+                vertx.createHttpServer().requestHandler(router).listen(8888, http -> {
+                    if (http.succeeded()) {
+                        System.out.println("HTTP server started on port 8888");
+                        startPromise.complete();
+                    } else {
+                        startPromise.fail(http.cause());
+                    }
+                });
+
+
             } else {
-                startPromise.fail(http.cause());
+                System.out.println("order vertical failure " + res.cause());
             }
         });
     }
