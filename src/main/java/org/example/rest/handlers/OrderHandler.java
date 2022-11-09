@@ -5,20 +5,25 @@ import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.MessageCodec;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.web.RequestBody;
 import io.vertx.ext.web.RoutingContext;
 import org.example.rest.models.Order;
 import org.example.rest.services.OrderService;
 import org.example.rest.verticles.EventBusTopics;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 
 public class OrderHandler {
 
-  private OrderService orderService;
+//  private OrderService orderService;
+  private JWTAuth jwtProvider;
   private Vertx vertx;
 
-  public OrderHandler(Vertx vertx) {
+  public OrderHandler(Vertx vertx, JWTAuth jwtProvider) {
+    this.jwtProvider = jwtProvider;
     this.vertx = vertx;
   }
 
@@ -57,47 +62,110 @@ public class OrderHandler {
   }
 
   public void getAllOrders(RoutingContext rc) {
-    System.out.println("getAllOrders");
-    vertx.eventBus().request(EventBusTopics.GET_ALL_ORDERS, "getOrders", ar -> {
-        if(ar.succeeded()) {
-          onSuccessResponse(rc, 200, ar.result().body());
-        }
-        else {
-          onErrorResponse(rc, 400, new Exception("failure in get all orders"));
-        }
-    });
+
+    RequestBody body = rc.body();
+    String token = rc.request().headers().get("Authorization");
+    String encodedToken = new String(Base64.getEncoder().encode(
+            token.getBytes()));
+    try {
+      jwtProvider.authenticate(new JsonObject().put("token", encodedToken))
+              .onSuccess(user -> {
+                System.out.println("User: " + user.principal());
+                System.out.println("getAllOrders");
+                vertx.eventBus().request(EventBusTopics.GET_ALL_ORDERS, "getOrders", ar -> {
+                  if(ar.succeeded()) {
+                    onSuccessResponse(rc, 200, ar.result().body());
+                  }
+                  else {
+                    onErrorResponse(rc, 400, new Exception("failure in get all orders"));
+                  }
+                });
+              })
+              .onFailure(err -> {
+                System.out.println("authenticate failure logout false");
+                onErrorResponse(rc, 400, new Exception("failure in get all orders"));
+              });
+    }
+    catch(Exception e ) {
+      e.printStackTrace();
+      onErrorResponse(rc, 400, new Exception("failure in get all orders"));
+    }
+
+//    System.out.println("getAllOrders");
+//    vertx.eventBus().request(EventBusTopics.GET_ALL_ORDERS, "getOrders", ar -> {
+//        if(ar.succeeded()) {
+//          onSuccessResponse(rc, 200, ar.result().body());
+//        }
+//        else {
+//          onErrorResponse(rc, 400, new Exception("failure in get all orders"));
+//        }
+//    });
   }
 
   public void addOrder(RoutingContext rc) {
-    System.out.println("addOrder");
 
     RequestBody body = rc.body();
-    JsonObject json = body.asJsonObject();
-    String dateStr = json.getString("date");
-    Date date = new Date(dateStr);//TODO use dateFormat
-    Long _id = json.getLong("_id");
-    String name = json.getString("name");
-    final Order order = new Order(_id, name, date); //rc.body().asJsonObject().mapTo(Order.class);
-
-    // final Order order = mapRequestBodyToOrder(rc);
-    System.out.println("order id: " + order.get_id());
-
+    String token = rc.request().headers().get("Authorization");
+    String encodedToken = new String(Base64.getEncoder().encode(
+            token.getBytes()));
     try {
-      //TODO if order is not empty
+      jwtProvider.authenticate(new JsonObject().put("token", encodedToken))
+              .onSuccess(user -> {
 
-      vertx.eventBus().request(EventBusTopics.INSERT_ORDER, json, ar -> {
-        if(ar.succeeded()) {
-          onSuccessResponse(rc, 200, ar.result().body());
-        }
-        else {
-          onErrorResponse(rc, 400, new Exception("failure in add order"));
-        }
-      });
+                System.out.println("addOrder");
+                JsonObject json = body.asJsonObject();
+                String dateStr = json.getString("date");
+                Date date = new Date(dateStr);//TODO use dateFormat
+                Long _id = json.getLong("_id");
+                String name = json.getString("name");
+                final Order order = new Order(_id, name, date); //rc.body().asJsonObject().mapTo(Order.class);
+
+                // final Order order = mapRequestBodyToOrder(rc);
+                System.out.println("order id: " + order.get_id());
+                  vertx.eventBus().request(EventBusTopics.INSERT_ORDER, json, ar -> {
+                    if(ar.succeeded()) {
+                      onSuccessResponse(rc, 200, ar.result().body());
+                    }
+                    else {
+                      onErrorResponse(rc, 400, new Exception("failure in add order"));
+                    }
+                  });
+              })
+              .onFailure(err -> {
+                System.out.println("authenticate failure add order");
+                onErrorResponse(rc, 400, new Exception("failure in add order"));
+              });
     }
-    catch(Exception e) {
+    catch(Exception e ) {
       e.printStackTrace();
+      onErrorResponse(rc, 400, new Exception("failure in add order"));
     }
 
-
+//    System.out.println("addOrder");
+//    JsonObject json = body.asJsonObject();
+//    String dateStr = json.getString("date");
+//    Date date = new Date(dateStr);//TODO use dateFormat
+//    Long _id = json.getLong("_id");
+//    String name = json.getString("name");
+//    final Order order = new Order(_id, name, date); //rc.body().asJsonObject().mapTo(Order.class);
+//
+//    // final Order order = mapRequestBodyToOrder(rc);
+//    System.out.println("order id: " + order.get_id());
+//
+//    try {
+//      //TODO if order is not empty
+//
+//      vertx.eventBus().request(EventBusTopics.INSERT_ORDER, json, ar -> {
+//        if(ar.succeeded()) {
+//          onSuccessResponse(rc, 200, ar.result().body());
+//        }
+//        else {
+//          onErrorResponse(rc, 400, new Exception("failure in add order"));
+//        }
+//      });
+//    }
+//    catch(Exception e) {
+//      e.printStackTrace();
+//    }
   }
 }

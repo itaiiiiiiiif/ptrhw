@@ -1,3 +1,4 @@
+
 FROM adoptopenjdk/openjdk11
 EXPOSE 8888
 VOLUME /app

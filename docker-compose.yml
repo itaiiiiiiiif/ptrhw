@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  restVerticle:
+    image: restdocker
+    restart: always
+    build: /src/main/docker/rest
+    expose:
+      - "8888"
+    ports:
+      - "5101:8888"
+  orderVerticle:
+    image: orderdocker
+    restart: always
+    build: /src/main/docker/order
+    ports:
+      - "5102:8888"
+    depends_on:
+      - restVerticle

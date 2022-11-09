@@ -3,7 +3,13 @@ package org.example.rest.models;
 import io.vertx.core.json.JsonObject;
 
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+@Getter
+@Setter
 public class Order {
 
   public long _id;
@@ -23,29 +29,5 @@ public class Order {
     this._id = jsonObject.getLong("_id");
     this.name = jsonObject.getString("name");
     this.date = new Date(jsonObject.getString("date"));
-  }
-
-  public long get_id() {
-    return _id;
-  }
-
-  public void set_id(long _id) {
-    this._id = _id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
   }
 }
