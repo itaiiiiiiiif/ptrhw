@@ -6,8 +6,6 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 @Getter
 @Setter
 public class Order {
@@ -23,6 +21,7 @@ public class Order {
     this._id = _id;
     this.name = name;
     this.date = date;
+
   }
 
   public Order(JsonObject jsonObject) {

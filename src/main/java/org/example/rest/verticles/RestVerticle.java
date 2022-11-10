@@ -2,10 +2,7 @@ package org.example.rest.verticles;
 
 import io.vertx.core.*;
 import io.vertx.core.http.HttpMethod;
-import io.vertx.core.http.HttpServerOptions;
-import io.vertx.core.net.JksOptions;
 import io.vertx.core.spi.cluster.ClusterManager;
-import io.vertx.ext.auth.KeyStoreOptions;
 import io.vertx.ext.auth.PubSecKeyOptions;
 import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.auth.jwt.JWTAuthOptions;
@@ -28,6 +25,7 @@ public class RestVerticle extends AbstractVerticle {
     private  OrderHandler orderHandler;
 
     private JWTAuth jwtProvider;
+
     //run in IDE
     public static void main(String[] args) {
 
@@ -47,6 +45,7 @@ public class RestVerticle extends AbstractVerticle {
         });
 
     }
+
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
 
@@ -109,20 +108,11 @@ public class RestVerticle extends AbstractVerticle {
                                                 "-----END PRIVATE KEY-----\n")
                         ));
 
-//                JWTAuthOptions config = new JWTAuthOptions()
-//                        .setKeyStore(new KeyStoreOptions()
-//                                .setType("jceks")
-//                                .setPath("keystore.jceks")
-//                                .setPassword("secret"));
-//
-//                jwtProvider = JWTAuth.create(vertx, config);
-
-
                 userRepository = new UserRepository(vertx);
                 userService = new UserService(jwtProvider, userRepository);
                 userHandler = new UserHandler(userService);
 
-                orderHandler = new OrderHandler(vertx, jwtProvider);
+                orderHandler = new OrderHandler(vertx, jwtProvider, userHandler);
 
                 Router router = getRouter(vertx, userHandler, orderHandler);
 
@@ -143,11 +133,12 @@ public class RestVerticle extends AbstractVerticle {
 
     private Router getRouter(Vertx vertx, UserHandler userHandler, OrderHandler orderHandler) {
         Router router = Router.router(vertx);
+
 //        router.route().handler(routingContext -> {
 //            HttpServerResponse response = routingContext.response();
 //            response
 //                .putHeader("content-type", "text/html")
-//                .end("<h1>Hello from my first Vert.x application</h1>");//TODO login template/page
+//                .end("<h1>Hello from my first Vert.x application</h1>");
 //        });
 
         router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));

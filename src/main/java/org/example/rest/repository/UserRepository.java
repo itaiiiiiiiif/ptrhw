@@ -51,4 +51,8 @@ public class UserRepository {
       return false;
     }
   }
+
+  public HashMap<String, User> getUsersMap() {
+    return users;
+  }
 }

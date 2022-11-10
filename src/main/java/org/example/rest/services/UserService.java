@@ -52,11 +52,10 @@ public class UserService {
   }
   public Boolean logout(RoutingContext rc, String token) {
     AtomicReference<Boolean> res = new AtomicReference<>(false);
-    //byte[] decodedSecret = Base64.getDecoder().decode(token);
-    String encodedToken = new String(Base64.getEncoder().encode(
-            token.getBytes()));
+    String[] tokens = token.split(" ");
+
     try {
-      jwtProvider.authenticate(new JsonObject().put("token", token.getBytes()))
+      jwtProvider.authenticate(new JsonObject().put("token", tokens[1]))
               .onSuccess(user -> {
                 System.out.println("User: " + user.principal());
                 res.set(userRepository.logout(rc, token));
@@ -64,11 +63,26 @@ public class UserService {
               .onFailure(err -> {
                 System.out.println("authenticate failure logout false");
               });
+
+      //TODO - fix - with Bearer prefix it causes invalid JWT format
+//      jwtProvider.authenticate(new JsonObject().put("token", token))
+//              .onSuccess(user -> {
+//                System.out.println("User: " + user.principal());
+//                res.set(userRepository.logout(rc, token));
+//              })
+//              .onFailure(err -> {
+//                System.out.println("authenticate failure logout false");
+//              });
+
     }
     catch(Exception e ) {
       e.printStackTrace();
       return res.get();
     }
     return res.get();
+  }
+
+  public User getUser(String sub) {
+    return userRepository.getUsersMap().get(sub);
   }
 }

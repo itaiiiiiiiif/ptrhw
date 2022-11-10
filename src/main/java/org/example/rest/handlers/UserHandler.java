@@ -2,10 +2,10 @@ package org.example.rest.handlers;
 
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.auth.User;
 import io.vertx.ext.web.RequestBody;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Session;
+import org.example.rest.models.User;
 import org.example.rest.services.UserService;
 
 public class UserHandler {
@@ -61,5 +61,9 @@ public class UserHandler {
               .setStatusMessage("ValidationException thrown! " + (e.getMessage()))
               .end();
     }
+  }
+
+  public User getUser(String sub) {
+    return userService.getUser(sub);
   }
 }
