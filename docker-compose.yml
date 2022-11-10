@@ -3,7 +3,7 @@ services:
   restVerticle:
     image: restdocker
     restart: always
-    build: /src/main/docker/rest
+    build: /restApp/src/main/docker/Rest
     expose:
       - "8888"
     ports:
@@ -11,8 +11,9 @@ services:
   orderVerticle:
     image: orderdocker
     restart: always
-    build: /src/main/docker/order
+    build: /orderApp/src/main/docker/Order
+    expose:
+      - "8888"
     ports:
       - "5102:8888"
-    depends_on:
-      - restVerticle
+
