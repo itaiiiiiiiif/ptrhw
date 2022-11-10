@@ -36,7 +36,7 @@ java 11 version , Docker Desktop, mvn-cli (not must), intellij IDE, Postman
 - 2. ` docker run -p 8888:8888 vertxdocker`
 - you can see the image and the container in your Docker Desktop app
 - also in the log you should see that the verticles are up:
-![img_9.png](img_9.png)
+![img_9.png](src/main/resources/img_9.png)
 
 ---------------------------------------------------------------
 
@@ -70,10 +70,10 @@ Please run Postman app on your machine
     (password is not really matter for now, the unique email as name do)
     
     for any other email the request should be rejected
-    ![img_5.png](img_5.png)
+    ![img_5.png](src/main/resources/img_5.png)
     
     you should get response as below:
-      ![img_8.png](img_8.png)
+      ![img_8.png](src/main/resources/img_8.png)
 
 - Please - copy (Ctrl+C) the token that came back in response in order to run the next requests. (without ")
 
@@ -91,9 +91,9 @@ Please run Postman app on your machine
     "Authorization" : "Bearer BASE+64+COPIED+TOKEN"
     }`
     
-    ![img_3.png](img_3.png)
+    ![img_3.png](src/main/resources/img_3.png)
     you should get response as below:
-    ![img_4.png](img_4.png) 
+    ![img_4.png](src/main/resources/img_4.png) 
     (running JSON.parse() on the response in the browser console will make it beautify)
 
 ---------------------------------------------------------------
@@ -120,10 +120,10 @@ Please run Postman app on your machine
     "Authorization" : "Bearer BASE+64+COPIED+TOKEN"
     }`
     
-    ![img_3.png](img_3.png)
+    ![img_3.png](src/main/resources/img_3.png)
     
     you should get the new order joined with the existing ones per the current user like below:
-    ![img_6.png](img_6.png)
+    ![img_6.png](src/main/resources/img_6.png)
     (running JSON.parse() on the response in the browser console will make it beautify)
 
 
@@ -142,7 +142,7 @@ Please run Postman app on your machine
     "Authorization" : "Bearer BASE+64+COPIED+TOKEN"
     }`
     
-    ![img_3.png](img_3.png)
+    ![img_3.png](src/main/resources/img_3.png)
     
     Params:
     
@@ -158,7 +158,7 @@ Please run Postman app on your machine
     "name": "Levid@gg.com"
     }`
         
-    ![img_7.png](img_7.png)
+    ![img_7.png](src/main/resources/img_7.png)
     you should get the result as boolean for logout success
 
 ---------------------------------------------------------------
